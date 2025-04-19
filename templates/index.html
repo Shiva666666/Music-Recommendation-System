@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Harmony Quantum Beats</title>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <style>
+            :root {
+                --button-primary: #7C3AED; /* Original purple for buttons */
+                --button-primary-dark: #6D28D9;
+                --primary: #DC2626; /* Blood red for Deep Learning theme */
+                --primary-dark: #991B1B;
+                --secondary: #10B981;
+                --accent: #F59E0B;
+                --background: #0F172A;
+                --surface: #1E293B;
+                --text: #F8FAFC;
+                --text-secondary: #94A3B8;
+                --knn: #A855F7;
+            }
+
+            body {
+                font-family: 'Inter', sans-serif;
+                background-color: var(--background);
+                color: var(--text);
+                margin: 0;
+                padding: 0;
+            }
+
+            .model-card {
+                transition: all 0.3s ease;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .model-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+                transform: translateX(100%);
+                transition: transform 0.6s ease;
+            }
+
+            .model-card:hover::before {
+                transform: translateX(-100%);
+            }
+
+            /* Standardize glow effects */
+            .shadow-glow-primary {
+                box-shadow: 0 0 8px rgba(220, 38, 38, 0.5);
+            }
+            .shadow-glow-secondary {
+                box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+            }
+            .shadow-glow-accent {
+                box-shadow: 0 0 8px rgba(245, 158, 11, 0.5);
+            }
+            .shadow-glow-purple {
+                box-shadow: 0 0 8px rgba(168, 85, 247, 0.5);
+            }
+
+            /* Model card hover effects */
+            .model-card[data-model="deep-learning"] {
+                background: linear-gradient(to bottom right, rgba(220, 38, 38, 0.1), transparent);
+            }
+
+            .model-card[data-model="svm"] {
+                background: linear-gradient(to bottom right, rgba(16, 185, 129, 0.1), transparent);
+            }
+
+            .model-card[data-model="random-forest"] {
+                background: linear-gradient(to bottom right, rgba(245, 158, 11, 0.1), transparent);
+            }
+
+            .model-card[data-model="knn"] {
+                background: linear-gradient(to bottom right, rgba(168, 85, 247, 0.1), transparent);
+            }
+
+            .model-card[data-model="deep-learning"]:hover {
+                border-color: var(--primary);
+                box-shadow: 0 0 15px rgba(220, 38, 38, 0.3);
+                background: linear-gradient(to bottom right, rgba(220, 38, 38, 0.2), rgba(220, 38, 38, 0.05));
+            }
+
+            .model-card[data-model="svm"]:hover {
+                border-color: var(--secondary);
+                box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+                background: linear-gradient(to bottom right, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.05));
+            }
+
+            .model-card[data-model="random-forest"]:hover {
+                border-color: var(--accent);
+                box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+                background: linear-gradient(to bottom right, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.05));
+            }
+
+            .model-card[data-model="knn"]:hover {
+                border-color: var(--knn);
+                box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+                background: linear-gradient(to bottom right, rgba(168, 85, 247, 0.2), rgba(168, 85, 247, 0.05));
+            }
+
+            /* Active states */
+            .model-card.active[data-model="deep-learning"] {
+                border-color: var(--primary);
+                box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
+                background: linear-gradient(to bottom right, rgba(220, 38, 38, 0.25), rgba(220, 38, 38, 0.1));
+            }
+
+            .model-card.active[data-model="svm"] {
+                border-color: var(--secondary);
+                box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+                background: linear-gradient(to bottom right, rgba(16, 185, 129, 0.25), rgba(16, 185, 129, 0.1));
+            }
+
+            .model-card.active[data-model="random-forest"] {
+                border-color: var(--accent);
+                box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+                background: linear-gradient(to bottom right, rgba(245, 158, 11, 0.25), rgba(245, 158, 11, 0.1));
+            }
+
+            .model-card.active[data-model="knn"] {
+                border-color: var(--knn);
+                box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
+                background: linear-gradient(to bottom right, rgba(168, 85, 247, 0.25), rgba(168, 85, 247, 0.1));
+            }
+
+            .recommendation-container {
+                min-height: 200px;
+                transition: all 0.3s ease;
+            }
+
+            .loading {
+                animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            }
+
+            @keyframes pulse {
+                0%, 100% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0.5;
+                }
+            }
+
+            .btn-primary {
+                background: linear-gradient(135deg, var(--button-primary), var(--button-primary-dark));
+                transition: all 0.3s ease;
+                color: white;
+                border: none;
+                cursor: pointer;
+            }
+
+            .btn-primary:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+            }
+
+            .select-wrapper {
+                position: relative;
+            }
+
+            .select-wrapper::after {
+                content: '';
+                position: absolute;
+                right: 1rem;
+                top: 50%;
+                transform: translateY(-50%);
+                width: 0;
+                height: 0;
+                border-left: 5px solid transparent;
+                border-right: 5px solid transparent;
+                border-top: 5px solid var(--text-secondary);
+                pointer-events: none;
+            }
+
+            .logo-text {
+                background: linear-gradient(135deg, var(--primary), var(--accent));
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+                font-weight: bold;
+            }
+        </style>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body>
+        <div id="webcrumbs">
+            <div class="bg-gray-950 min-h-screen p-4 lg:min-w-[1024px]">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-2">
+                        <span class="logo-text px-2 py-1 text-lg">Harmony-Quantum-Beats</span>
+                        <svg class="w-6 h-6 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                        </svg>
+                    </div>
+                    {% if current_user.is_authenticated %}
+                    <div class="flex items-center gap-4">
+                        <a href="{{ url_for('dashboard') }}" class="btn-primary px-4 py-2 rounded-lg text-sm font-medium">Dashboard</a>
+                        <a href="{{ url_for('auth.logout') }}" class="btn-primary px-4 py-2 rounded-lg text-sm font-medium">Logout</a>
+                    </div>
+                    {% else %}
+                        <a href="{{ url_for('auth.login') }}" class="btn-primary px-4 py-2 rounded-lg text-sm font-medium">
+                        Sign In
+                        </a>
+                    {% endif %}
+
+                    
+                </div>
+
+                <div class="flex flex-col items-center justify-center mb-8 pt-4">
+                    <div class="flex items-center justify-center gap-3 mb-2">
+                        <svg class="w-6 h-6 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                        </svg>
+                        <div class="text-white font-medium">
+                            Next-generation music recommendations powered by Deep Learning and Machine Learning
+                        </div>
+                        <svg class="w-6 h-6 text-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <div class="bg-surface rounded-lg p-5 border border-gray-800">
+                        <h2 class="text-white text-lg font-bold mb-2">Your Music Preferences</h2>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Tell us what you like and let our quantum-enhanced algorithm find your perfect match.
+                        </p>
+                        <div class="mb-4">
+                            <h3 class="text-gray-300 text-sm mb-2">Mood</h3>
+                            <div class="select-wrapper">
+                                <select class="w-full bg-gray-800 border border-gray-700 text-gray-300 rounded-lg py-2 px-3 appearance-none focus:outline-none focus:ring-2 focus:ring-primary hover:border-gray-600 transition-colors">
+                                    <option value="" disabled selected>Select your mood</option>
+                                    <option value="happy">Happy</option>
+                                    <option value="sad">Sad</option>
+                                    <option value="energetic">Energetic</option>
+                                    <option value="relaxed">Relaxed</option>
+                                    <option value="neutral">Neutral</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="btn-primary w-full py-2 rounded-lg font-medium">
+                            Get Recommendations
+                        </button>
+                    </div>
+
+                    <div class="md:col-span-2 lg:col-span-3 bg-surface rounded-lg p-6 border border-gray-800">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                            <div class="model-card bg-opacity-40 rounded-lg p-4 border border-gray-700 cursor-pointer" 
+                                data-model="deep-learning"
+                                onclick="showRecommendation(event)">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <div class="w-4 h-4 rounded-full border-2 border-red-600 shadow-glow-primary"></div>
+                                    <h3 class="text-white text-sm font-medium">Deep Learning</h3>
+                                </div>
+                                <p class="text-xs text-gray-400">Advanced neural networks for precise recommendations</p>
+                            </div>
+
+                            <div class="model-card bg-opacity-40 rounded-lg p-4 border border-gray-700 cursor-pointer"
+                                data-model="svm"
+                                onclick="showRecommendation(event)">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <div class="w-4 h-4 rounded-full bg-secondary shadow-glow-secondary"></div>
+                                    <h3 class="text-white text-sm font-medium">SVM</h3>
+                                </div>
+                                <p class="text-xs text-gray-400">Support Vector Machine for pattern recognition</p>
+                            </div>
+
+                            <div class="model-card bg-opacity-40 rounded-lg p-4 border border-gray-700 cursor-pointer"
+                                data-model="random-forest"
+                                onclick="showRecommendation(event)">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <div class="w-4 h-4 rounded-full bg-accent shadow-glow-accent"></div>
+                                    <h3 class="text-white text-sm font-medium">Random Forest</h3>
+                                </div>
+                                <p class="text-xs text-gray-400">Random Forest for diverse suggestions</p>
+                            </div>
+
+                            <div class="model-card bg-opacity-40 rounded-lg p-4 border border-gray-700 cursor-pointer"
+                                data-model="knn"
+                                onclick="showRecommendation(event)">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <div class="w-4 h-4 rounded-full border-2 border-purple-500 shadow-glow-purple"></div>
+                                    <h3 class="text-white text-sm font-medium">KNN</h3>
+                                </div>
+                                <p class="text-xs text-gray-400">K-Nearest Neighbors for similar taste matching</p>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <h3 class="text-white text-lg font-medium mb-2" id="recommendation-output">No recommendations yet</h3>
+                            <p class="text-gray-400 text-sm">
+                                Select a model to see your personalized recommendation
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <footer class="mt-8 text-center">
+                    <p class="text-gray-400 text-sm">
+                        Harmony Quantum Beats — Next-gen music recommendations powered by AI
+                    </p>
+                    <p class="text-gray-400 text-sm mt-1">© 2025 | Using advanced machine learning models</p>
+                </footer>
+            </div>
+        </div>
+
+        <script>
+            function showRecommendation(text) {
+                const output = document.getElementById("recommendation-output");
+                output.innerHTML = `
+                    <div class="animate-fade-in">
+                        <h3 class="text-lg font-medium mb-2">${text}</h3>
+                        <p class="text-gray-400 text-sm">Based on your preferences and selected model</p>
+                    </div>
+                `;
+                
+                // Remove active class from all cards
+                document.querySelectorAll('.model-card').forEach(card => {
+                    card.classList.remove('active');
+                });
+                
+                // Add active class to clicked card
+                event.currentTarget.classList.add('active');
+            }
+        </script>
+
+        <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+    </body>
+</html>

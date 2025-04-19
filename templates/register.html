@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Harmony Quantum Beats</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --button-primary: #7C3AED;
+            --button-primary-dark: #6D28D9;
+            --primary: #DC2626;
+            --primary-dark: #991B1B;
+            --background: #0F172A;
+            --surface: #1E293B;
+            --text: #F8FAFC;
+            --text-secondary: #94A3B8;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .register-container {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .register-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .register-container:hover::before {
+            transform: translateX(100%);
+        }
+
+        .input-field {
+            background: rgba(30, 41, 59, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            border-color: var(--button-primary);
+            box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--button-primary), var(--button-primary-dark));
+            transition: all 0.3s ease;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(0);
+            animation: ripple-animation 1s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .loading-dots::after {
+            content: '...';
+            animation: loading-dots 1.5s infinite;
+        }
+
+        @keyframes loading-dots {
+            0% { content: '.'; }
+            33% { content: '..'; }
+            66% { content: '...'; }
+        }
+
+        .logo-text {
+            background: linear-gradient(135deg, var(--primary), var(--button-primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: bold;
+        }
+
+        .music-icon {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        .password-strength {
+            height: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .password-strength.weak {
+            background: #DC2626;
+            width: 25%;
+        }
+
+        .password-strength.medium {
+            background: #F59E0B;
+            width: 50%;
+        }
+
+        .password-strength.strong {
+            background: #10B981;
+            width: 75%;
+        }
+
+        .password-strength.very-strong {
+            background: #3B82F6;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container animate-fade-in">
+        <div class="text-center mb-8">
+            <div class="flex items-center justify-center gap-2 mb-4">
+                <span class="logo-text text-2xl">harmony-quantum-beats</span>
+                <svg class="w-6 h-6 text-primary music-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+                </svg>
+            </div>
+            <p class="text-gray-400">Create your account to get personalized music recommendations</p>
+        </div>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <div class="text-red-400 text-sm mb-4">
+        {% for msg in messages %}
+        <p>{{ msg }}</p>
+        {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <form id="registerForm" method="POST" action="{{ url_for('auth.register') }}" class="space-y-6">
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-300 mb-2">Username</label>
+                <input type="text" id="username" name="username" class="input-field w-full px-4 py-2 rounded-lg focus:outline-none" required>
+            </div>
+
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+                <input type="email" id="email" name="email" class="input-field w-full px-4 py-2 rounded-lg focus:outline-none" required>
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-300 mb-2">Password</label>
+                <input type="password" id="password" name="password" class="input-field w-full px-4 py-2 rounded-lg focus:outline-none" required>
+                <div class="password-strength mt-2 rounded"></div>
+            </div>
+
+            <div>
+                <label for="confirmPassword" class="block text-sm font-medium text-gray-300 mb-2">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" class="input-field w-full px-4 py-2 rounded-lg focus:outline-none" required>
+            </div>
+
+            <div class="flex items-center">
+                <input type="checkbox" id="terms" name="terms" class="h-4 w-4 text-primary focus:ring-primary border-gray-700 rounded" required>
+                <label for="terms" class="ml-2 block text-sm text-gray-400">
+                    I agree to the <a href="#" class="text-primary hover:text-primary-dark">Terms of Service</a> and <a href="#" class="text-primary hover:text-primary-dark">Privacy Policy</a>
+                </label>
+            </div>
+
+            <button type="submit" class="btn-primary w-full py-2 rounded-lg font-medium">
+                Create Account
+            </button>
+
+            <div class="text-center">
+                <p class="text-sm text-gray-400">
+                    Already have an account? 
+                    <a href="{{ url_for('auth.login') }}" class="text-primary hover:text-primary-dark">Sign in</a>
+                </p>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('registerForm');
+            const submitButton = form.querySelector('button[type="submit"]');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const passwordStrength = document.querySelector('.password-strength');
+
+            // Password strength indicator
+            passwordInput.addEventListener('input', function() {
+                const password = this.value;
+                let strength = 0;
+                
+                if (password.length >= 8) strength++;
+                if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength++;
+                if (password.match(/\d/)) strength++;
+                if (password.match(/[^a-zA-Z\d]/)) strength++;
+                
+                passwordStrength.className = 'password-strength mt-2 rounded';
+                if (strength <= 1) {
+                    passwordStrength.classList.add('weak');
+                } else if (strength === 2) {
+                    passwordStrength.classList.add('medium');
+                } else if (strength === 3) {
+                    passwordStrength.classList.add('strong');
+                } else {
+                    passwordStrength.classList.add('very-strong');
+                }
+            });
+
+            // Password confirmation check
+            confirmPasswordInput.addEventListener('input', function() {
+                if (this.value !== passwordInput.value) {
+                    this.setCustomValidity("Passwords don't match");
+                } else {
+                    this.setCustomValidity('');
+                }
+            });
+
+            
+
+            // Add ripple effect to button
+            submitButton.addEventListener('click', function(event) {
+                const ripple = document.createElement('div');
+                const rect = this.getBoundingClientRect();
+                const x = event.clientX - rect.left;
+                const y = event.clientY - rect.top;
+                
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.className = 'ripple';
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 1000);
+            });
+
+            // Add focus effects to input fields
+            const inputs = form.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('focus', () => {
+                    input.parentElement.classList.add('ring-2', 'ring-primary');
+                });
+                
+                input.addEventListener('blur', () => {
+                    input.parentElement.classList.remove('ring-2', 'ring-primary');
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
