@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: music-recommender-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: music-recommender
+  template:
+    metadata:
+      labels:
+        app: music-recommender
+    spec:
+      containers:
+      - name: music-recommender-container
+        image: shivadhanush/music-recommender-app:latest
+        ports:
+        - containerPort: 5000
