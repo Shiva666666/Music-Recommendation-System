@@ -115,7 +115,7 @@ def dashboard():
         mood_counts=mood_counts,
         logs=logs   # make sure this is passed
     )
-
+#Test
 # 🟢 Run app
 if __name__ == "__main__":
     with app.app_context():
