@@ -16,3 +16,4 @@ numpy
 joblib
 tensorflow
 scikit-learn
+pytest
