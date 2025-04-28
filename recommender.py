@@ -31,6 +31,24 @@ def get_recommendations(mood, model_type):
         top = sampled.sort_values("score", ascending=False).head(5)
         return top[["track_name", "artists"]].to_dict(orient="records")
 
+    elif model_type == "quantum-ml":
+        # Dummy recommendations for Quantum ML
+        return [
+            {"track_name": "Quantum Leap", "artists": "Qubit Ensemble"},
+            {"track_name": "Entangled Grooves", "artists": "Superposition DJs"},
+            {"track_name": "Schrodinger's Beat", "artists": "WaveFunction"},
+            {"track_name": "Spin Dance", "artists": "Quantum Vibes"},
+            {"track_name": "Heisenberg Shuffle", "artists": "Uncertainty Crew"}
+        ]
+    elif model_type == "quantum-dl":
+        # Dummy recommendations for Quantum DL
+        return [
+            {"track_name": "Quantum Deep", "artists": "Neural Qubits"},
+            {"track_name": "Quantum State", "artists": "EntangleNet"},
+            {"track_name": "Superposed Dreams", "artists": "QDL Collective"},
+            {"track_name": "Decoherence", "artists": "Collapse Theory"},
+            {"track_name": "Quantum Tunnel", "artists": "Barrier Breakers"}
+        ]
     else:
         if model_type == "knn":
             model = knn_model

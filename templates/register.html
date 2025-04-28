@@ -8,19 +8,24 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
-            --button-primary: #7C3AED;
-            --button-primary-dark: #6D28D9;
-            --primary: #DC2626;
-            --primary-dark: #991B1B;
-            --background: #0F172A;
-            --surface: #1E293B;
-            --text: #F8FAFC;
-            --text-secondary: #94A3B8;
+            --button-primary: #a41b2a; /* Dante Red */
+            --button-primary-dark: #710c1c;
+            --primary: #a41b2a; /* Dante Red */
+            --primary-dark: #710c1c;
+            --secondary: #223c6b; /* Vergil Blue */
+            --accent: #b7bcc7; /* Silver */
+            --background: #181921; /* Nero Black */
+            --surface: #23242d;
+            --text: #e7e9f0;
+            --text-secondary: #8b8d97;
+            --knn: #6e3ca5; /* Royal Purple */
+            --qml: #4b7bbd; /* Quantum ML: blue highlight */
+            --qdl: #b71c50; /* Quantum DL: crimson highlight */
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--background);
+            background: linear-gradient(120deg, #181921 0%, #23242d 100%);
             color: var(--text);
             margin: 0;
             padding: 0;
@@ -30,16 +35,67 @@
             justify-content: center;
         }
 
+        h1, h2, h3, h4, h5, h6, .logo-text {
+            font-family: 'Inter', sans-serif;
+            color: var(--primary);
+            letter-spacing: 1.2px;
+            text-shadow: 0 2px 12px rgba(164, 27, 42, 0.25), 0 1px 0 #23242d;
+        }
+
+        select, .select-wrapper select {
+            background: var(--surface);
+            color: var(--text);
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 1em;
+            font-family: 'Inter', sans-serif;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 8px var(--primary);
+        }
+
+        input, textarea {
+            background: var(--surface);
+            color: var(--text);
+            border: 1.5px solid var(--accent);
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        footer, .text-gray-400 {
+            color: var(--text-secondary) !important;
+        }
+
+        .bg-surface {
+            background: linear-gradient(120deg, #23242d 60%, #181921 100%);
+            border-radius: 18px !important;
+            box-shadow: 0 2px 24px rgba(0,0,0,0.16);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            background: var(--background);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-dark);
+            border-radius: 4px;
+        }
+
         .register-container {
-            background: rgba(30, 41, 59, 0.5);
+            background: rgba(35, 36, 45, 0.95);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1.5px solid var(--accent);
             border-radius: 1rem;
             padding: 2rem;
             width: 100%;
             max-width: 500px;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 2px 18px rgba(164, 27, 42, 0.12);
         }
 
         .register-container::before {
@@ -59,28 +115,33 @@
         }
 
         .input-field {
-            background: rgba(30, 41, 59, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--surface);
+            border: 1.5px solid var(--accent);
             color: var(--text);
             transition: all 0.3s ease;
         }
 
         .input-field:focus {
             border-color: var(--button-primary);
-            box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
+            box-shadow: 0 0 0 2px rgba(164, 27, 42, 0.2);
         }
 
         .btn-primary {
             background: linear-gradient(135deg, var(--button-primary), var(--button-primary-dark));
             transition: all 0.3s ease;
-            color: white;
-            border: none;
+            color: var(--text);
+            border: 2px solid var(--accent);
             cursor: pointer;
+            letter-spacing: 1px;
+            font-family: 'Inter', sans-serif;
+            box-shadow: 0 2px 8px rgba(164, 27, 42, 0.12);
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 6px 18px rgba(164, 27, 42, 0.18);
+            background: linear-gradient(135deg, var(--button-primary-dark), var(--button-primary));
+            border-color: var(--primary);
         }
 
         .btn-primary:active {
@@ -130,11 +191,18 @@
         }
 
         .logo-text {
-            background: linear-gradient(135deg, var(--primary), var(--button-primary));
+            background: linear-gradient(120deg, #d7263d 40%, #a41b2a 100%);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             font-weight: bold;
+            text-shadow:
+                0 0 8px #d7263d,
+                0 0 16px #a41b2a,
+                0 2px 12px #d7263d99,
+                0 1px 0 #23242d;
+            letter-spacing: 2px;
+            font-size: 2rem;
         }
 
         .music-icon {
