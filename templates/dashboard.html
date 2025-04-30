@@ -8,22 +8,77 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         :root {
-            --button-primary: #7C3AED;
-            --button-primary-dark: #6D28D9;
-            --primary: #DC2626;
-            --primary-dark: #991B1B;
-            --background: #0F172A;
-            --surface: #1E293B;
-            --text: #F8FAFC;
-            --text-secondary: #94A3B8;
+            --button-primary: #a41b2a; /* Dante Red */
+            --button-primary-dark: #710c1c;
+            --primary: #a41b2a; /* Dante Red */
+            --primary-dark: #710c1c;
+            --secondary: #223c6b; /* Vergil Blue */
+            --accent: #b7bcc7; /* Silver */
+            --background: #181921; /* Nero Black */
+            --surface: #23242d;
+            --text: #e7e9f0;
+            --text-secondary: #8b8d97;
+            --knn: #6e3ca5; /* Royal Purple */
+            --qml: #4b7bbd; /* Quantum ML: blue highlight */
+            --qdl: #b71c50; /* Quantum DL: crimson highlight */
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--background);
+            background: linear-gradient(120deg, #181921 0%, #23242d 100%);
             color: var(--text);
             margin: 0;
             padding: 0;
+        }
+
+        h1, h2, h3, h4, h5, h6, .logo-text {
+            font-family: 'Inter', sans-serif;
+            color: var(--primary);
+            letter-spacing: 1.2px;
+            text-shadow: 0 2px 12px rgba(164, 27, 42, 0.25), 0 1px 0 #23242d;
+        }
+
+        select, .select-wrapper select {
+            background: var(--surface);
+            color: var(--text);
+            border: 2px solid var(--accent);
+            border-radius: 8px;
+            padding: 8px 12px;
+            font-size: 1em;
+            font-family: 'Inter', sans-serif;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 8px var(--primary);
+        }
+
+        input, textarea {
+            background: var(--surface);
+            color: var(--text);
+            border: 1.5px solid var(--accent);
+            border-radius: 6px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        footer, .text-gray-400 {
+            color: var(--text-secondary) !important;
+        }
+
+        .bg-surface {
+            background: linear-gradient(120deg, #23242d 60%, #181921 100%);
+            border-radius: 18px !important;
+            box-shadow: 0 2px 24px rgba(0,0,0,0.16);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            background: var(--background);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-dark);
+            border-radius: 4px;
         }
 
         .glass-card {
@@ -40,11 +95,18 @@
         }
 
         .logo-text {
-            background: linear-gradient(135deg, var(--primary), var(--button-primary));
+            background: linear-gradient(120deg, #d7263d 40%, #a41b2a 100%);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             font-weight: bold;
+            text-shadow:
+                0 0 8px #d7263d,
+                0 0 16px #a41b2a,
+                0 2px 12px #d7263d99,
+                0 1px 0 #23242d;
+            letter-spacing: 2px;
+            font-size: 2rem;
         }
 
         .music-icon {
@@ -66,14 +128,19 @@
         .btn-primary {
             background: linear-gradient(135deg, var(--button-primary), var(--button-primary-dark));
             transition: all 0.3s ease;
-            color: white;
-            border: none;
+            color: var(--text);
+            border: 2px solid var(--accent);
             cursor: pointer;
+            letter-spacing: 1px;
+            font-family: 'Inter', sans-serif;
+            box-shadow: 0 2px 8px rgba(164, 27, 42, 0.12);
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 6px 18px rgba(164, 27, 42, 0.18);
+            background: linear-gradient(135deg, var(--button-primary-dark), var(--button-primary));
+            border-color: var(--primary);
         }
 
         .btn-primary:active {
@@ -217,24 +284,53 @@
         }
 
         .model-badge.deep-learning {
-            background: rgba(220, 38, 38, 0.1);
-            color: #DC2626;
-        }
+    background: linear-gradient(120deg, #3a0a0a 60%, #d7263d 100%);
+    color: #d7263d;
+    border: 1.5px solid #d7263d;
+    box-shadow: 0 0 8px #d7263d55;
+    text-shadow: 0 0 6px #d7263dcc, 0 0 12px #d7263d88;
+}
 
-        .model-badge.svm {
-            background: rgba(16, 185, 129, 0.1);
-            color: #10B981;
-        }
+.model-badge.svm {
+    background: linear-gradient(120deg, #0a232d 60%, #00bfff 100%);
+    color: #00bfff;
+    border: 1.5px solid #00bfff;
+    box-shadow: 0 0 8px #00bfff55;
+    text-shadow: 0 0 6px #00bfffcc, 0 0 12px #00bfff88;
+}
 
-        .model-badge.random-forest {
-            background: rgba(245, 158, 11, 0.1);
-            color: #F59E0B;
-        }
+.model-badge.random-forest {
+    background: linear-gradient(120deg, #232d1a 60%, #d7c43d 100%);
+    color: #d7c43d;
+    border: 1.5px solid #d7c43d;
+    box-shadow: 0 0 8px #d7c43d33;
+    text-shadow: 0 0 6px #d7c43dcc, 0 0 12px #d7c43d88;
+}
 
-        .model-badge.knn {
-            background: rgba(168, 85, 247, 0.1);
-            color: #A855F7;
-        }
+.model-badge.knn {
+    background: linear-gradient(120deg, #1a102d 60%, #a259ff 100%);
+    color: #a259ff;
+    border: 1.5px solid #a259ff;
+    box-shadow: 0 0 8px #a259ff55;
+    text-shadow: 0 0 6px #a259ffcc, 0 0 12px #a259ff88;
+}
+
+.model-badge.quantum-ml {
+    background: linear-gradient(120deg, #1a2333 60%, #3d6fd7 100%);
+    color: #3d6fd7;
+    border: 1.5px solid #3d6fd7;
+    box-shadow: 0 0 8px #3d6fd755;
+    text-shadow: 0 0 6px #3d6fd7cc, 0 0 12px #3d6fd788;
+}
+
+.model-badge.quantum-dl {
+    background: linear-gradient(120deg, #2d1a28 60%, #d73d8e 100%);
+    color: #d73d8e;
+    border: 1.5px solid #d73d8e;
+    box-shadow: 0 0 8px #d73d8e55;
+    text-shadow: 0 0 6px #d73d8ecc, 0 0 12px #d73d8e88;
+}
+
     </style>
 </head>
 <body class="min-h-screen">
@@ -304,12 +400,24 @@
                             <div class="history-item {{ log.model_type | lower | replace(' ', '-') }} p-4 rounded-lg border border-gray-800">
                               <div class="content">
                                 <div class="flex items-center justify-between mb-2">
-                                  <span class="model-badge {{ log.model_type | lower | replace(' ', '-') }}">{{ log.model_type }}</span>
+                                  <span class="model-badge {{ 'random-forest' if log.model_type|lower in ['random', 'random-forest'] else log.model_type|lower|replace(' ', '-') }}">{{ log.model_type }}</span>
                                   <span class="text-gray-400 text-sm">{{ log.timestamp.strftime('%b %d, %Y %H:%M') }}</span>
                                 </div>
                                 {% for rec in log.results[:3] %}
-                                  <h3 class="text-lg font-medium">{{ rec.track_name }} - {{ rec.artists }}</h3>
-                                  <p class="text-gray-400 text-sm">Mood: {{ log.mood }}</p>
+                                  <div style="display: flex; align-items: center; margin-bottom: 12px;">
+                                    {% if rec.album_cover %}
+                                      <img src="{{ rec.album_cover }}" alt="Album Cover" style="width:40px;height:40px;border-radius:6px;margin-right:10px;">
+                                    {% endif %}
+                                    <div>
+                                      <h3 class="text-lg font-medium" style="margin-bottom:2px;">
+                                        {{ rec.track_name }} - {{ rec.artist if rec.artist is defined else rec.artists }}
+                                      </h3>
+                                      {% if rec.spotify_link %}
+                                        <a href="{{ rec.spotify_link }}" target="_blank" style="color:#1DB954;">Play on Spotify</a>
+                                      {% endif %}
+                                      <p class="text-gray-400 text-sm" style="margin:0;">Mood: {{ log.mood }}</p>
+                                    </div>
+                                  </div>
                                 {% endfor %}
                               </div>
                             </div>

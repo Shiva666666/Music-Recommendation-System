@@ -17,3 +17,5 @@ joblib
 tensorflow
 scikit-learn
 pytest
+spotipy==2.23.0
+python-dotenv==1.0.0

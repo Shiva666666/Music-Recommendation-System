@@ -7,26 +7,93 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
         <style>
             :root {
-                --button-primary: #7C3AED; /* Original purple for buttons */
-                --button-primary-dark: #6D28D9;
-                --primary: #DC2626; /* Blood red for Deep Learning theme */
-                --primary-dark: #991B1B;
-                --secondary: #10B981;
-                --accent: #F59E0B;
-                --background: #0F172A;
-                --surface: #1E293B;
-                --text: #F8FAFC;
-                --text-secondary: #94A3B8;
-                --knn: #A855F7;
-            }
+    --button-primary: #a41b2a; /* Dante Red */
+    --button-primary-dark: #710c1c;
+    --primary: #a41b2a; /* Dante Red */
+    --primary-dark: #710c1c;
+    --secondary: #223c6b; /* Vergil Blue */
+    --accent: #b7bcc7; /* Silver */
+    --background: #181921; /* Nero Black */
+    --surface: #23242d;
+    --text: #e7e9f0;
+    --text-secondary: #8b8d97;
+    --knn: #6e3ca5; /* Royal Purple */
+    --qml: #4b7bbd; /* Quantum ML: blue highlight */
+    --qdl: #b71c50; /* Quantum DL: crimson highlight */
+}
+
 
             body {
-                font-family: 'Inter', sans-serif;
-                background-color: var(--background);
-                color: var(--text);
-                margin: 0;
-                padding: 0;
-            }
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(120deg, #181921 0%, #23242d 100%);
+    color: var(--text);
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6, .logo-text {
+    font-family: 'Inter', sans-serif;
+    color: var(--primary);
+    letter-spacing: 1.2px;
+    text-shadow: 0 2px 12px rgba(164, 27, 42, 0.25), 0 1px 0 #23242d;
+}
+
+select, .select-wrapper select {
+    background: var(--surface);
+    color: var(--text);
+    border: 2px solid var(--accent);
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 1em;
+    font-family: 'Inter', sans-serif;
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 8px var(--primary);
+}
+
+input, textarea {
+    background: var(--surface);
+    color: var(--text);
+    border: 1.5px solid var(--accent);
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+}
+
+footer, .text-gray-400 {
+    color: var(--text-secondary) !important;
+}
+
+.bg-surface {
+    background: #23242d !important; /* Fully opaque, no transparency */
+    border-radius: 18px !important;
+    box-shadow: 0 2px 24px rgba(0,0,0,0.16);
+    border: 2px solid #a41b2a !important; /* Devil May Cry red for separation */
+}
+
+.model-card {
+    border-radius: 14px !important;
+    border-width: 2px !important;
+    border-style: solid;
+    border-color: var(--surface);
+    background: var(--surface);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 1em;
+    font-weight: 500;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.10);
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--primary-dark);
+    border-radius: 4px;
+}
 
             .model-card {
                 transition: all 0.3s ease;
@@ -66,69 +133,131 @@
 
             /* Model card hover effects */
             .model-card[data-model="deep-learning"] {
-                background: linear-gradient(to bottom right, rgba(220, 38, 38, 0.1), transparent);
-            }
+    background: linear-gradient(120deg, #3a0a0a 60%, #d7263d 100%);
+    border-color: #d7263d;
+    box-shadow: 0 0 16px 2px #d7263d33;
+}
+.model-card[data-model="deep-learning"] h3 {
+    color: #d7263d;
+    text-shadow: 0 0 6px #d7263dcc, 0 0 12px #d7263d88;
+}
+.model-card[data-model="svm"] {
+    background: linear-gradient(120deg, #0a232d 60%, #00bfff 100%);
+    border-color: #00bfff;
+    box-shadow: 0 0 16px 2px #00bfff33;
+}
+.model-card[data-model="svm"] h3 {
+    color: #00bfff;
+    text-shadow: 0 0 6px #00bfffcc, 0 0 12px #00bfff88;
+}
+.model-card[data-model="random-forest"] {
+    background: linear-gradient(120deg, #232d1a 60%, #d7c43d 100%);
+    border-color: #d7c43d;
+    box-shadow: 0 0 16px 2px #d7c43d33;
+}
+.model-card[data-model="random-forest"] h3 {
+    color: #d7c43d;
+    text-shadow: 0 0 6px #d7c43dcc, 0 0 12px #d7c43d88;
+}
+.model-card[data-model="knn"] {
+    background: linear-gradient(120deg, #1a102d 60%, #a259ff 100%);
+    border-color: #a259ff;
+    box-shadow: 0 0 16px 2px #a259ff33;
+}
+.model-card[data-model="knn"] h3 {
+    color: #a259ff;
+    text-shadow: 0 0 6px #a259ffcc, 0 0 12px #a259ff88;
+}
 
-            .model-card[data-model="svm"] {
-                background: linear-gradient(to bottom right, rgba(16, 185, 129, 0.1), transparent);
-            }
-
-            .model-card[data-model="random-forest"] {
-                background: linear-gradient(to bottom right, rgba(245, 158, 11, 0.1), transparent);
-            }
-
-            .model-card[data-model="knn"] {
-                background: linear-gradient(to bottom right, rgba(168, 85, 247, 0.1), transparent);
-            }
+.model-card[data-model="quantum-ml"] {
+    background: linear-gradient(120deg, #1a2333 60%, #3d6fd7 100%);
+    border-color: #3d6fd7;
+    box-shadow: 0 0 16px 2px #3d6fd733;
+}
+.model-card[data-model="quantum-ml"] h3 {
+    color: #3d6fd7;
+    text-shadow: 0 0 6px #3d6fd7cc, 0 0 12px #3d6fd788;
+}
+.model-card[data-model="quantum-dl"] h3 {
+    color: #d73d8e;
+    text-shadow: 0 0 6px #d73d8ecc, 0 0 12px #d73d8e88;
+}
+.model-card[data-model="quantum-dl"] {
+    background: linear-gradient(120deg, #2d1a28 60%, #d73d8e 100%);
+    border-color: #d73d8e;
+    box-shadow: 0 0 16px 2px #d73d8e33;
+}
 
             .model-card[data-model="deep-learning"]:hover {
-                border-color: var(--primary);
-                box-shadow: 0 0 15px rgba(220, 38, 38, 0.3);
-                background: linear-gradient(to bottom right, rgba(220, 38, 38, 0.2), rgba(220, 38, 38, 0.05));
-            }
+    border-color: #d7263d;
+    box-shadow: 0 0 24px 6px #d7263d, 0 0 12px 2px #fff2;
+    background: linear-gradient(120deg, #61151e 60%, #d7263d 100%);
+}
 
             .model-card[data-model="svm"]:hover {
-                border-color: var(--secondary);
-                box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
-                background: linear-gradient(to bottom right, rgba(16, 185, 129, 0.2), rgba(16, 185, 129, 0.05));
-            }
+    border-color: #00bfff;
+    box-shadow: 0 0 24px 6px #00bfff, 0 0 12px 2px #fff2;
+    background: linear-gradient(120deg, #0a232d 60%, #00bfff 100%);
+}
 
             .model-card[data-model="random-forest"]:hover {
-                border-color: var(--accent);
-                box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
-                background: linear-gradient(to bottom right, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.05));
-            }
+    border-color: #d7c43d;
+    box-shadow: 0 0 24px 6px #d7c43d, 0 0 12px 2px #fff2;
+    background: linear-gradient(120deg, #232d1a 60%, #d7c43d 100%);
+}
 
             .model-card[data-model="knn"]:hover {
-                border-color: var(--knn);
-                box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
-                background: linear-gradient(to bottom right, rgba(168, 85, 247, 0.2), rgba(168, 85, 247, 0.05));
-            }
+    border-color: #a259ff;
+    box-shadow: 0 0 24px 6px #a259ff, 0 0 12px 2px #fff2;
+    background: linear-gradient(120deg, #1a102d 60%, #a259ff 100%);
+}
+
+.model-card[data-model="quantum-ml"]:hover {
+    border-color: #3d6fd7;
+    box-shadow: 0 0 24px 6px #3d6fd7, 0 0 12px 2px #fff2;
+    background: linear-gradient(120deg, #1a2333 60%, #3d6fd7 100%);
+}
+
+.model-card[data-model="quantum-dl"]:hover {
+    border-color: #d73d8e;
+    box-shadow: 0 0 24px 6px #d73d8e, 0 0 12px 2px #fff2;
+    background: linear-gradient(120deg, #2d1a28 60%, #d73d8e 100%);
+}
 
             /* Active states */
             .model-card.active[data-model="deep-learning"] {
-                border-color: var(--primary);
-                box-shadow: 0 0 20px rgba(220, 38, 38, 0.4);
-                background: linear-gradient(to bottom right, rgba(220, 38, 38, 0.25), rgba(220, 38, 38, 0.1));
-            }
+    border-color: #d7263d;
+    box-shadow: 0 0 24px 6px #d7263d, 0 0 12px 2px #fff2;
+    background: linear-gradient(120deg, #61151e 60%, #d7263d 100%);
+}
 
             .model-card.active[data-model="svm"] {
-                border-color: var(--secondary);
-                box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
-                background: linear-gradient(to bottom right, rgba(16, 185, 129, 0.25), rgba(16, 185, 129, 0.1));
-            }
+    border-color: #00bfff;
+    box-shadow: 0 0 24px 6px #00bfff, 0 0 12px 2px #fff2;
+    background: linear-gradient(120deg, #0a232d 60%, #00bfff 100%);
+}
 
             .model-card.active[data-model="random-forest"] {
-                border-color: var(--accent);
-                box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
-                background: linear-gradient(to bottom right, rgba(245, 158, 11, 0.25), rgba(245, 158, 11, 0.1));
-            }
+    border-color: #d7c43d;
+    box-shadow: 0 0 24px 6px #d7c43d, 0 0 12px 2px #fff2;
+    background: linear-gradient(120deg, #232d1a 60%, #d7c43d 100%);
+}
 
             .model-card.active[data-model="knn"] {
-                border-color: var(--knn);
-                box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
-                background: linear-gradient(to bottom right, rgba(168, 85, 247, 0.25), rgba(168, 85, 247, 0.1));
-            }
+    border-color: #a259ff;
+    box-shadow: 0 0 24px 6px #a259ff, 0 0 12px 2px #fff2;
+    background: linear-gradient(120deg, #1a102d 60%, #a259ff 100%);
+}
+.model-card.active[data-model="quantum-ml"] {
+    border-color: #3d6fd7;
+    box-shadow: 0 0 24px 6px #3d6fd7, 0 0 12px 2px #fff2;
+    background: linear-gradient(120deg, #1a2333 60%, #3d6fd7 100%);
+}
+.model-card.active[data-model="quantum-dl"] {
+    border-color: #d73d8e;
+    box-shadow: 0 0 24px 6px #d73d8e, 0 0 12px 2px #fff2;
+    background: linear-gradient(120deg, #2d1a28 60%, #d73d8e 100%);
+}
 
             .recommendation-container {
                 min-height: 200px;
@@ -149,12 +278,28 @@
             }
 
             .btn-primary {
-                background: linear-gradient(135deg, var(--button-primary), var(--button-primary-dark));
-                transition: all 0.3s ease;
-                color: white;
-                border: none;
-                cursor: pointer;
-            }
+    background: linear-gradient(135deg, var(--button-primary), var(--button-primary-dark));
+    transition: all 0.3s ease;
+    color: var(--text);
+    border: 2px solid var(--accent);
+    cursor: pointer;
+    letter-spacing: 1px;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 2px 8px rgba(164, 27, 42, 0.12);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 6px 18px rgba(164, 27, 42, 0.18);
+    background: linear-gradient(135deg, var(--button-primary-dark), var(--button-primary));
+    border-color: var(--primary);
+}
+
+.btn-primary:active {
+    background: var(--primary-dark);
+    color: var(--accent);
+    border-color: var(--qdl);
+}
 
             .btn-primary:hover {
                 transform: translateY(-2px);
@@ -180,16 +325,24 @@
             }
 
             .logo-text {
-                background: linear-gradient(135deg, var(--primary), var(--accent));
+                background: linear-gradient(120deg, #d7263d 40%, #a41b2a 100%);
                 -webkit-background-clip: text;
                 background-clip: text;
                 color: transparent;
                 font-weight: bold;
+                text-shadow:
+                    0 0 8px #d7263d,
+                    0 0 16px #a41b2a,
+                    0 2px 12px #d7263d99,
+                    0 1px 0 #23242d;
+                letter-spacing: 2px;
+                font-size: 2rem;
             }
         </style>
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
     <body>
+    <canvas id="neural-bg" style="position:fixed;left:0;top:0;width:100vw;height:100vh;z-index:0;pointer-events:none;"></canvas>
         <div id="webcrumbs">
             <div class="bg-gray-950 min-h-screen p-4 lg:min-w-[1024px]">
                 <div class="flex items-center justify-between mb-6">
@@ -257,7 +410,7 @@
                                 data-model="deep-learning"
                                 onclick="showRecommendation(event)">
                                 <div class="flex items-center gap-2 mb-2">
-                                    <div class="w-4 h-4 rounded-full border-2 border-red-600 shadow-glow-primary"></div>
+                                    <div class="w-4 h-4 rounded-full bg-red-600 shadow-glow-primary"></div>
                                     <h3 class="text-white text-sm font-medium">Deep Learning</h3>
                                 </div>
                                 <p class="text-xs text-gray-400">Advanced neural networks for precise recommendations</p>
@@ -267,7 +420,7 @@
                                 data-model="svm"
                                 onclick="showRecommendation(event)">
                                 <div class="flex items-center gap-2 mb-2">
-                                    <div class="w-4 h-4 rounded-full bg-secondary shadow-glow-secondary"></div>
+                                    <div class="w-4 h-4 rounded-full bg-blue-600 shadow-glow-secondary"></div>
                                     <h3 class="text-white text-sm font-medium">SVM</h3>
                                 </div>
                                 <p class="text-xs text-gray-400">Support Vector Machine for pattern recognition</p>
@@ -277,7 +430,7 @@
                                 data-model="random-forest"
                                 onclick="showRecommendation(event)">
                                 <div class="flex items-center gap-2 mb-2">
-                                    <div class="w-4 h-4 rounded-full bg-accent shadow-glow-accent"></div>
+                                    <div class="w-4 h-4 rounded-full bg-yellow-400 shadow-glow-accent"></div>
                                     <h3 class="text-white text-sm font-medium">Random Forest</h3>
                                 </div>
                                 <p class="text-xs text-gray-400">Random Forest for diverse suggestions</p>
@@ -287,11 +440,25 @@
                                 data-model="knn"
                                 onclick="showRecommendation(event)">
                                 <div class="flex items-center gap-2 mb-2">
-                                    <div class="w-4 h-4 rounded-full border-2 border-purple-500 shadow-glow-purple"></div>
+                                    <div class="w-4 h-4 rounded-full bg-purple-500 shadow-glow-purple"></div>
                                     <h3 class="text-white text-sm font-medium">KNN</h3>
                                 </div>
                                 <p class="text-xs text-gray-400">K-Nearest Neighbors for similar taste matching</p>
                             </div>
+                        <div class="model-card bg-opacity-40 rounded-lg p-4 border border-gray-700 cursor-pointer" data-model="quantum-ml" onclick="showRecommendation(event)">
+                            <div class="flex items-center gap-2 mb-2">
+                                <div class="w-4 h-4 rounded-full bg-blue-400 shadow-glow-purple"></div>
+                                <h3 class="text-white text-sm font-medium">Quantum ML</h3>
+                            </div>
+                            <p class="text-xs text-gray-400">Quantum-enhanced machine learning for unique insights</p>
+                        </div>
+                        <div class="model-card bg-opacity-40 rounded-lg p-4 border border-gray-700 cursor-pointer" data-model="quantum-dl" onclick="showRecommendation(event)">
+                            <div class="flex items-center gap-2 mb-2">
+                                <div class="w-4 h-4 rounded-full bg-pink-400 shadow-glow-purple"></div>
+                                <h3 class="text-white text-sm font-medium">Quantum DL</h3>
+                            </div>
+                            <p class="text-xs text-gray-400">Quantum neural networks for cutting-edge recommendations</p>
+                        </div>
                         </div>
 
                         <div class="text-center">

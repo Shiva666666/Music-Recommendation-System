@@ -128,6 +128,7 @@ document.body.appendChild(symbolContainer);
 
 // Animation for recommendation text
 function showRecommendation(text) {
+    if (typeof stopRandomForestBackground === 'function') stopRandomForestBackground();
     const output = document.getElementById("recommendation-output");
     const model = event.currentTarget.getAttribute('data-model');
     const config = modelConfigs[model];
@@ -238,6 +239,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// ...
+
+
 // Add this CSS to your stylesheet
 const style = document.createElement('style');
 style.textContent = `
@@ -293,21 +297,3 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Add new CSS for floating animation
-const newStyles = `
-    @keyframes float {
-        0% {
-            transform: translate(-50%, -50%);
-        }
-        50% {
-            transform: translate(-50%, -60%);
-        }
-        100% {
-            transform: translate(-50%, -50%);
-        }
-    }
-`;
-
-const styleSheet = document.createElement("style");
-styleSheet.textContent = newStyles;
-document.head.appendChild(styleSheet);

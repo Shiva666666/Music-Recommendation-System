@@ -8,6 +8,7 @@ import json
 from models import db, User, RecommendationLog
 from auth_routes import auth # Explicit route functions
 import ast
+from spotify_api import search_song  # Import the Spotify search function
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///recommendations.db'
@@ -43,12 +44,23 @@ def recommend():
 
         recommendations = get_recommendations(mood, model_type)
 
+        # Enrich recommendations with Spotify data
+        enriched_recommendations = []
+        for song in recommendations:
+            spotify_info = search_song(song['track_name'], song['artists'])
+            if spotify_info:
+                # Merge Spotify info with original recommendation
+                enriched_song = {**song, **spotify_info}
+                enriched_recommendations.append(enriched_song)
+            else:
+                enriched_recommendations.append(song)
+
         # Log new recommendation
         log = RecommendationLog(
             user_id=current_user.id,
             mood=mood,
             model_type=model_type,
-            results=str(recommendations),
+            results=str(enriched_recommendations),
             timestamp=datetime.utcnow()
         )
         db.session.add(log)
@@ -63,7 +75,7 @@ def recommend():
                 db.session.delete(old_log)
             db.session.commit()
 
-        return jsonify(recommendations)
+        return jsonify(enriched_recommendations)
 
     except Exception as e:
         print("❌ Backend error:", e)
