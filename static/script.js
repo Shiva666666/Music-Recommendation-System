@@ -1064,81 +1064,109 @@ function showRecommendation(event) {
   }
   card.classList.add('active');
 
-  // Show dummy recommendations for quantum-ml and quantum-dl
-  if (model === "quantum-ml") {
-      const dummy = [
-          { track_name: "Quantum Leap", artists: "Qubit Ensemble" },
-          { track_name: "Entangled Grooves", artists: "Superposition DJs" },
-          { track_name: "Schrodinger's Beat", artists: "WaveFunction" },
-          { track_name: "Spin Dance", artists: "Quantum Vibes" },
-          { track_name: "Heisenberg Shuffle", artists: "Uncertainty Crew" }
-      ];
-      output.innerHTML = `
-          <div class="animate-fade-in">
-              <h3 class="text-lg font-medium mb-2">Top Recommendations</h3>
-              <ul class="text-left text-sm mt-2">
-                  ${dummy.map(song => `<li>${song.track_name} — ${song.artists}</li>`).join('')}
-              </ul>
-              <p class="text-gray-400 text-sm mt-2">(Preview) Quantum ML dummy recommendations</p>
-          </div>
-      `;
-      return;
-  }
-  if (model === "quantum-dl") {
-      const dummy = [
-          { track_name: "Quantum Deep", artists: "Neural Qubits" },
-          { track_name: "Quantum State", artists: "EntangleNet" },
-          { track_name: "Superposed Dreams", artists: "QDL Collective" },
-          { track_name: "Decoherence", artists: "Collapse Theory" },
-          { track_name: "Quantum Tunnel", artists: "Barrier Breakers" }
-      ];
-      output.innerHTML = `
-          <div class="animate-fade-in">
-              <h3 class="text-lg font-medium mb-2">Top Recommendations</h3>
-              <ul class="text-left text-sm mt-2">
-                  ${dummy.map(song => `<li>${song.track_name} — ${song.artists}</li>`).join('')}
-              </ul>
-              <p class="text-gray-400 text-sm mt-2">(Preview) Quantum DL dummy recommendations</p>
-          </div>
-      `;
-      return;
-  }
+  // // Show dummy recommendations for quantum-ml and quantum-dl
+  // if (model === "quantum-ml") {
+  //     const dummy = [
+  //         { track_name: "Quantum Leap", artists: "Qubit Ensemble" },
+  //         { track_name: "Entangled Grooves", artists: "Superposition DJs" },
+  //         { track_name: "Schrodinger's Beat", artists: "WaveFunction" },
+  //         { track_name: "Spin Dance", artists: "Quantum Vibes" },
+  //         { track_name: "Heisenberg Shuffle", artists: "Uncertainty Crew" }
+  //     ];
+  //     output.innerHTML = `
+  //         <div class="animate-fade-in">
+  //             <h3 class="text-lg font-medium mb-2">Top Recommendations</h3>
+  //             <ul class="text-left text-sm mt-2">
+  //                 ${dummy.map(song => `<li>${song.track_name} — ${song.artists}</li>`).join('')}
+  //             </ul>
+  //             <p class="text-gray-400 text-sm mt-2">(Preview) Quantum ML dummy recommendations</p>
+  //         </div>
+  //     `;
+  //     return;
+  // }
+  // if (model === "quantum-dl") {
+  //     const dummy = [
+  //         { track_name: "Quantum Deep", artists: "Neural Qubits" },
+  //         { track_name: "Quantum State", artists: "EntangleNet" },
+  //         { track_name: "Superposed Dreams", artists: "QDL Collective" },
+  //         { track_name: "Decoherence", artists: "Collapse Theory" },
+  //         { track_name: "Quantum Tunnel", artists: "Barrier Breakers" }
+  //     ];
+  //     output.innerHTML = `
+  //         <div class="animate-fade-in">
+  //             <h3 class="text-lg font-medium mb-2">Top Recommendations</h3>
+  //             <ul class="text-left text-sm mt-2">
+  //                 ${dummy.map(song => `<li>${song.track_name} — ${song.artists}</li>`).join('')}
+  //             </ul>
+  //             <p class="text-gray-400 text-sm mt-2">(Preview) Quantum DL dummy recommendations</p>
+  //         </div>
+  //     `;
+  //     return;
+  // }
 
   output.innerHTML = `<div class="loading animate-fade-in">Loading...</div>`;
   fetch("/recommend", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ mood: mood, model: model })
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ mood, model })
   })
-      .then(res => res.json())
-      .then(data => {
-          if (data.error) {
-              output.innerHTML = `<span class='text-red-500'>${data.error}</span>`;
-              return;
-          }
-          output.innerHTML = `
-              <div class="animate-fade-in">
-                  <h3 class="text-lg font-medium mb-2">Top Recommendations</h3>
-                  <ul class="text-left text-sm mt-2">
-                      ${data.map(song => `
-                          <li style="margin-bottom: 16px;">
-                              <div style="display: flex; align-items: center;">
-                                  ${song.album_cover ? `<img src="${song.album_cover}" alt="Album Cover" style="width:48px;height:48px;border-radius:6px;margin-right:12px;">` : ''}
-                                  <div>
-                                      <div><strong>${song.track_name}</strong> — ${song.artist || song.artists}</div>
-                                      ${song.spotify_link ? `<a href="${song.spotify_link}" target="_blank" style="color:#1DB954;">Play on Spotify</a>` : ''}
-                                  </div>
-                              </div>
-                          </li>
-                      `).join('')}
-                  </ul>
-                  <p class="text-gray-400 text-sm mt-2">Based on your mood and model selection</p>
-              </div>
-          `;
-      })
-      .catch(err => {
-          output.innerHTML = `<span class='text-red-500'>Error: ${err}</span>`;
-      });
+    .then(res => res.json())
+    .then(songs => {
+      if (songs.error) {
+        output.innerHTML = `<span class="text-red-500">${songs.error}</span>`;
+        return;
+      }
+      if (!songs.length) {
+        output.innerHTML = `<p class="text-gray-400">No recommendations found for this mood/model.</p>`;
+        return;
+      }
+  
+      // Build each <li> with optional album_cover and spotify_link
+      const listItems = songs.map(song => {
+        // fall back artist key (you wrote sometimes "artist", sometimes "artists")
+        const artistName = song.artist || song.artists || "Unknown Artist";
+  
+        return `
+          <li class="mb-4 flex items-center">
+            ${song.album_cover
+              ? `<img
+                   src="${song.album_cover}"
+                   alt="Cover for ${song.track_name}"
+                   class="w-12 h-12 rounded mr-4"
+                 />`
+              : `<div class="w-12 h-12 bg-gray-700 rounded mr-4"></div>`
+            }
+            <div>
+              <div class="font-medium">${song.track_name}</div>
+              <div class="text-sm text-gray-300">${artistName}</div>
+              ${song.spotify_link
+                ? `<a
+                     href="${song.spotify_link}"
+                     target="_blank"
+                     class="text-xs text-green-400 hover:underline"
+                   >Play on Spotify</a>`
+                : ``
+              }
+            </div>
+          </li>`;
+      }).join("");
+  
+      output.innerHTML = `
+        <div class="animate-fade-in">
+          <h3 class="text-lg font-medium mb-2">Top Recommendations</h3>
+          <ul class="list-none p-0 text-sm text-left">
+            ${listItems}
+          </ul>
+          <p class="text-gray-400 text-xs mt-2">Based on your mood and model selection</p>
+        </div>
+      `;
+    })
+    .catch(err => {
+      output.innerHTML = `<span class="text-red-500">Error: ${err.message}</span>`;
+    });
+  
+  
+  
 }
 
 // Ripple effect on card click
