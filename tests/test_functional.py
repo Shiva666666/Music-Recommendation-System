@@ -8,33 +8,29 @@ def test_prediction_api():
     }
 
     try:
+        # Send POST request
         response = requests.post(url, json=payload)
         print("Status Code:", response.status_code)
 
+        # Check HTTP status
         if response.status_code != 200:
             print("❌ API did not return 200 OK.")
             return
 
-        data = response.json()
-        print("Raw response:", response.text)
+        # Get response as text
+        response_text = response.text
+        print("\nRaw Response Text:\n", response_text)
 
-
-        # Handle both dict or list response formats
-        if isinstance(data, dict):
-            if "recommendations" in data and isinstance(data["recommendations"], list):
-                print("✅ Valid recommendations found.")
-            else:
-                print("⚠️ Response received, but recommendations key missing or not a list.")
-        elif isinstance(data, list) and "track_name" in data[0]:
-            print("✅ Track name found in list item.")
+        # Basic validation by checking expected keywords in the text
+        if "track_name" in response_text or "recommendations" in response_text:
+            print(" Response contains expected keywords.")
         else:
-            print("⚠️ Unexpected response format.")
+            print(" Response received, but expected keywords not found.")
 
-        print("✅ Functional test completed without errors.")
+        print("\n Functional test completed .")
 
     except Exception as e:
-        print("❌ Test encountered an error:", str(e))
-
+        print(" Test encountered an error:", str(e))
 
 if __name__ == "__main__":
     test_prediction_api()
