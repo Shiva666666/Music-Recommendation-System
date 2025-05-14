@@ -45,7 +45,11 @@ def test_gui():
         print(f" GUI Test Failed with Exception: {e}")
 
     finally:
-        driver.quit()
+        if driver:
+            try:
+                driver.quit()
+            except Exception:
+                pass
 
 if __name__ == "__main__":
     test_gui()
