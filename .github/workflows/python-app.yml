@@ -28,7 +28,7 @@ jobs:
       run: |
         pylint *.py --fail-under=5
 
-    - name: Run Unit Tests
+    - name: Running All TestCases
       run: |
         # python -m unittest discover tests
         pytest --maxfail=1000 --disable-warnings -q
