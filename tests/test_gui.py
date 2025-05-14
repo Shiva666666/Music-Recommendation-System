@@ -6,6 +6,7 @@ from selenium.webdriver.chrome.options import Options
 import time
 
 def test_gui():
+    driver = None
     try:
         # Setup Chrome
         options = Options()
