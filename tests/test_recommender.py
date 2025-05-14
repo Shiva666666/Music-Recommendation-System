@@ -35,7 +35,7 @@ def test_invalid_model_type():
     mood = "sad"
     with pytest.raises(ValueError) as exc_info:
         get_recommendations(mood, "invalid-model")
-    assert "Unsupported model type" in str(exc_info.value)
+    assert "Unsupported model_type" in str(exc_info.value)
 
 def test_empty_mood_results():
     # Test with a mood that doesn't exist in the dataset
